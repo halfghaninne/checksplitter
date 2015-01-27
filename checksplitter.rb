@@ -15,6 +15,7 @@ class Checksplitter
   def percent
     @percent
   end
+end
   
   
   
