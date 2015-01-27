@@ -1,9 +1,9 @@
 require "pry"
 
 class Checksplitter
-  def initialize(billwtax, subtotal, persons, percent)
+  def initialize(bill_w_tax, subtotal, persons, percent)
     @persons = persons
-    @billwtax = billwtax
+    @bill_w_tax = bill_w_tax
     @subtotal = subtotal
     @percent = percent 
   end
@@ -16,25 +16,29 @@ class Checksplitter
     @percent * 0.01
   end
   
-  def billwtax
-    @billwtax
+  def bill_w_tax
+    @bill_w_tax
   end
   
   def subtotal
     @subtotal
   end
   
+  def sub_per_person
+    subtotal / persons
+  end
+  
+  def share_of_tax
+    (bill_w_tax - subtotal) / persons
+  end
+  
   def solution
-    sub = (subtotal) / persons
-    sharetax = (billwtax - subtotal) / persons
-    total = sub + (percent * sub) + sharetax
-    puts total
+    sub_per_person + (percent * sub_per_person) + share_of_tax
   end
 
 end
 
-new = Checksplitter.new(150, 108, 3, 20)
-puts new.billwtax
+
 
 binding.pry
 
