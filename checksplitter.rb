@@ -3,9 +3,9 @@ require "pry"
 class Checksplitter
   def initialize (billwtax, totalbill)
     @persons = nil
-    @billwtax = billwtax.to_f
-    @bill = totalbill.to_f
-    @percent = nil 
+    @billwtax = billwtax
+    @bill = totalbill
+    @percent = 20 
   end
   
   def persons
@@ -16,7 +16,9 @@ class Checksplitter
     @percent
   end
 end
-  
+
+binding.pry
+
   
   
     
