@@ -63,9 +63,7 @@ class Checksplitter
   # Documentation
   # Documentation
   
-  def persons
-    @persons
-  end
+  attr_reader :persons, :bill_w_tax, :subtotal
   
   # Documentation
   # Documentation
@@ -74,23 +72,7 @@ class Checksplitter
   def percent
     @percent * 0.01
   end
-  
-  # Documentation
-  # Documentation
-  # Documentation
-  
-  def bill_w_tax
-    @bill_w_tax
-  end
-  
-  # Documentation
-  # Documentation
-  # Documentation
-  
-  def subtotal
-    @subtotal
-  end
-  
+   
   # Documentation
   # Documentation
   # Documentation
