@@ -10,25 +10,25 @@ require "pry"
 
 
 class DinnerClub
-  def initialize(club_name)
-    @club_name = club_name
-    @members_tallies = []
+  def initialize(*member_names)
+    @members_tallies.push(member_name: member_name, balance: 0.0)
   end
   
-  attr_reader :club_name
-  
-  def add_member(name, balance)
-    @members_tallies.push(name: name, balance: 0)
+  def add_member(member_name, balance)
   end
   
-  def add_outing(location_name)
-    outing_split: Checksplitter.new(bill_w_tax, subtotal, member_tallies.length, percent)
-    outing_balance = outing_split.solution
-    
+  def outing_balance
+  end
+  
+  def add_outing(location_name, *member_names)
+    outing_split: Checksplitter.new(bill_w_tax, subtotal, member_names.length, percent)
+    outing_balance(outing_split.solution, member_names)
   end
   
   def add_to_indiv_balance 
-    
+  end
+  
+  def treater
   end
   
 end
@@ -100,7 +100,7 @@ class Checksplitter
   # Returns:
   # Float: subtotal / persons
   #
-  # State Changes:
+  # State Changes (any changes to attributes):
   # None.
   
   def sub_per_person
@@ -121,24 +121,6 @@ class Checksplitter
   
   def solution
     sub_per_person + (percent * sub_per_person) + share_of_tax
-  end
-  
-  # Documentation
-  # Documentation
-  # Documentation
-    
-  def members_present(name1, name2, name3)
-    @memberspresent= Array.new
-  end
-  
-  # Documentation
-  # Documentation
-  # Documentation
-  
-  def assign_balances
-    @members = {}
-    @members[members_present] = solution
-    print @members
   end
 
 end
