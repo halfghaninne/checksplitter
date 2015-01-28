@@ -39,9 +39,6 @@ class Checksplitter
 end
 
 
-
-binding.pry
-
   
   
     

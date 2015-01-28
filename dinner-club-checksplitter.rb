@@ -11,21 +11,22 @@ require "pry"
 
 class DinnerClub
   def initialize(*member_names)
-    @members_tallies.push(member_name: member_name, balance: 0.0)
+    @outings= {}
+    @members = {}
+    member_names.each {|member| @members[member] = 0.0}
   end
   
-  def add_member(member_name, balance)
+  def add_member(member_name)
+    @members[member_name] = 0.0
   end
   
-  def outing_balance
+  def add_cost_to_balance(amount, name)
+    member_names.each {|name| @members[member] += amount}
   end
   
-  def add_outing(location_name, *member_names)
-    outing_split: Checksplitter.new(bill_w_tax, subtotal, member_names.length, percent)
-    outing_balance(outing_split.solution, member_names)
-  end
-  
-  def add_to_indiv_balance 
+  def add_outing(location_name, cost, *member_names)
+    outing_split = Checksplitter.new(bill_w_tax, subtotal, member_names.length, percent)
+    add_cost_to_balance(outing_split.solution, member_names)
   end
   
   def treater
@@ -34,7 +35,7 @@ class DinnerClub
 end
 
 #TEST CODE
-badgrlzclub = DinnerClub.new("badgrlzclub")
+badgrlzclub = DinnerClub.new("Ava", "Alex",  "Ingrid")
 puts badgrlzclub.inspect
 badgrlzclub.add_member("Ava", 40)
 puts puts badgrlzclub.inspect
@@ -125,10 +126,6 @@ class Checksplitter
 
 end
 
-
-
-binding.pry
-
   
-  
+bindng.pry
     
