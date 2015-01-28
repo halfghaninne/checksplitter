@@ -3,6 +3,9 @@ require "pry"
 # Class: DinnerClub
 #
 # Tracks members of certain dinner clubs and their total payments.
+# Tracks their spending.
+# Tracks outings and attendance.
+# Allows individual members to "treat" the group and foot the bill.
 #
 # Attributes:
 # @names    -
@@ -11,22 +14,42 @@ require "pry"
 
 class DinnerClub
   def initialize(*member_names)
-    @outings= {}
+    @outings = {}
     @members = {}
     member_names.each {|member| @members[member] = 0.0}
   end
   
   def add_member(member_name)
     @members[member_name] = 0.0
+    @members
   end
   
-  def add_cost_to_balance(amount, name)
-    member_names.each {|name| @members[member] += amount}
+  # SCRATCH WORK - absolved into add_outing
+  # def add_cost_to_balance(amount, *members_present)
+  #   members_present.each do |name|
+  #     if @members.has_key?(name)
+  #       @members[name] += amount_per_person
+  #     else
+  #       @members[name] = amount_per_person
+  #   end
+  # end
+
+  def add_outing( bill_w_tax, subtotal, percent, *members_present )
+    outing_split = Checksplitter.new(bill_w_tax, subtotal, members_present.length, percent)
+    amount_per_person = outing_split.solution
+    
+    members_present.each do |name| 
+      if @members.has_key?(name)
+        @members[name] += amount_per_person
+      else
+        @members[name] = amount_per_person
+      end
+    end 
+    @members
   end
-  
-  def add_outing(location_name, cost, *member_names)
-    outing_split = Checksplitter.new(bill_w_tax, subtotal, member_names.length, percent)
-    add_cost_to_balance(outing_split.solution, member_names)
+
+  def get_spending_report(name)
+    puts members[name]
   end
   
   def treater
@@ -34,11 +57,13 @@ class DinnerClub
   
 end
 
+binding.pry
+
 #TEST CODE
-badgrlzclub = DinnerClub.new("Ava", "Alex",  "Ingrid")
-puts badgrlzclub.inspect
-badgrlzclub.add_member("Ava", 40)
-puts puts badgrlzclub.inspect
+# badgrlzclub = DinnerClub.new("Ava", "Alex",  "Ingrid")
+# puts badgrlzclub.inspect
+# badgrlzclub.add_cost_to_balance(30, "Alex", "Ava")
+# puts badgrlzclub.inspect
 
 # Class: Checksplitter
 #

@@ -9,10 +9,16 @@ class Checksplitter
   end
   
   def persons
+    # if @persons < 0
+    #   @persons *= -1
+    # end
     @persons
   end
   
   def percent
+    # if @percent < 0
+    #   @percent *= -1
+    # end
     @percent * 0.01
   end
   
@@ -36,9 +42,4 @@ class Checksplitter
     sub_per_person + (percent * sub_per_person) + share_of_tax
   end
 
-end
-
-
-  
-  
-    
+end    
