@@ -1,4 +1,6 @@
 require "pry"
+require_relative 'person'
+require_relative 'checksplitter'
 
 # Class: DinnerClub
 #
@@ -34,123 +36,42 @@ class DinnerClub
   #   end
   # end
 
-  def add_outing( bill_w_tax, subtotal, percent, *members_present )
+  def split_outing( bill_w_tax, subtotal, percent, *members_present )
     outing_split = Checksplitter.new(bill_w_tax, subtotal, members_present.length, percent)
     amount_per_person = outing_split.solution
     
     members_present.each do |name| 
       if @members.has_key?(name)
-        @members[name] += amount_per_person
+        @members[name] += amount_per_person 
       else
+        add_member(name)
         @members[name] = amount_per_person
       end
     end 
     @members
   end
+  
+  def treater_outing( bill_w_tax, subtotal, percent, member )
+    outing_split = Checksplitter.new(bill_w_tax, subtotal, 1, percent)
+    amount_per_person = outing_split.solution
+    
+    treater = member 
+      if @members.has_key?(treater)
+        @members[treater] += amount_per_person 
+      else
+        add_member(treater)
+        @members[treater] = amount_per_person
+      end
+    @members
+  end
+    
+  def add_outing_attendance(location, *members_present )
+    @outings[location] = members_present
+    puts @outings 
+  end
 
-  def get_spending_report(name)
-    puts members[name]
-  end
-  
-  def treater
-  end
-  
-end
+
+
+end  
 
 binding.pry
-
-#TEST CODE
-# badgrlzclub = DinnerClub.new("Ava", "Alex",  "Ingrid")
-# puts badgrlzclub.inspect
-# badgrlzclub.add_cost_to_balance(30, "Alex", "Ava")
-# puts badgrlzclub.inspect
-
-# Class: Checksplitter
-#
-# Splits check evenly among diners, adds tip.
-#
-# Attributes:
-# @persons    - Integer: number of diners.
-# @bill_w_tax - Float: Total bill, including tax.
-# @subtotal   - Float: Subtotal of meal, before tax.
-# @percent    - Integer or Float: User-provided precentage of tip, ex: 20.
-#
-# Public Methods:
-# #percent
-# #sub_per_person
-# #share_of_tax
-# #solution
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-
-class Checksplitter
-  def initialize(bill_w_tax, subtotal, persons, percent)
-    @persons = persons
-    @bill_w_tax = bill_w_tax
-    @subtotal = subtotal
-    @percent = percent 
-  end 
-  
-  attr_reader :persons, :bill_w_tax, :subtotal
-  # I assumed in my Class documentation that these are not public methods
-  
-  # Public: #percent
-  # Converts user-provided precent to a value helpful for math operations
-  # 
-  # Parameters: 
-  # @percent - Integer or Float: User-provided percentage to tip, ex: 20
-  #
-  # Returns:
-  # Float: Number converted to float to perform operations
-  #
-  # State Changes:
-  # None.
-  
-  def percent
-    @percent * 0.01
-  end
-   
-  # Public: #sub_per_person
-  # Divides subtotal of check among diners.
-  # 
-  # Parameters: 
-  # subtotal - Float: User-provided subtotal of bill, ex: 150.67
-  # persons - Integer: Number of diners
-  #
-  # Returns:
-  # Float: subtotal / persons
-  #
-  # State Changes (any changes to attributes):
-  # None.
-  
-  def sub_per_person
-    subtotal / persons
-  end
-  
-  # Documentation
-  # Documentation
-  # Documentation
-  
-  def share_of_tax
-    (bill_w_tax - subtotal) / persons
-  end
-  
-  # Documentation
-  # Documentation
-  # Documentation
-  
-  def solution
-    sub_per_person + (percent * sub_per_person) + share_of_tax
-  end
-
-end
-
-  
-bindng.pry
-    

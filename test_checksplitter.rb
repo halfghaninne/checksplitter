@@ -17,20 +17,20 @@ class ChecksplitterTest < Minitest::Test
     assert_equal(43.482, cs.solution)
   end
   
-  # def test_for_negative_number_of_persons
-  #   cs = Checksplitter.new(15, 10, -5, 50)
-  #   assert_equal(4, cs.solution)
-  # end
-  #
-  # def test_for_zero_persons
-  #   cs = Checksplitter.new(15, 10, 0, 50)
-  #   assert_equal(22.5, cs.solution)
-  # end
-  #
-  # def test_for_negative_tippers
-  #   cs = Checksplitter.new(15, 10, 5, -50)
-  #   assert_equal(4, cs.solution)
-  # end
+  def test_for_negative_number_of_persons
+    cs = Checksplitter.new(15, 10, -5, 50)
+    assert_equal(4, cs.solution)
+  end
+
+  def test_for_zero_persons
+    cs = Checksplitter.new(15, 10, 0, 50)
+    assert_equal(20, cs.solution)
+  end
+
+  def test_for_negative_tippers
+    cs = Checksplitter.new(15, 10, 5, -50)
+    assert_equal(4, cs.solution)
+  end
   
 end
 
