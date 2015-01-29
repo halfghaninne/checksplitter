@@ -5,24 +5,16 @@ require 'pry'
 # Splits check evenly among diners, adds tip.
 #
 # Attributes:
-# @persons    - Integer: number of diners.
-# @bill_w_tax - Float: Total bill, including tax.
-# @subtotal   - Float: Subtotal of meal, before tax.
-# @percent    - Integer or Float: User-provided precentage of tip, ex: 20.
+# + @persons    - Integer: number of diners.
+# + @bill_w_tax - Float: Total bill, including tax.
+# + @subtotal   - Float: Subtotal of meal, before tax.
+# + @percent    - Integer or Float: User-provided precentage of tip, ex: 20.
 #
 # Public Methods:
-# #percent
-# #sub_per_person
-# #share_of_tax
-# #solution
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
-# #xxxxxxx
+# + percent
+# + sub_per_person
+# + share_of_tax
+# + solution
 
 class Checksplitter
   def initialize(bill_w_tax, subtotal, persons, percent)
@@ -34,19 +26,17 @@ class Checksplitter
   
   attr_reader :bill_w_tax, :subtotal
   
-  # I assumed in my Class documentation that these are not public methods
-  
-  # Public: #percent
-  # Converts user-provided precent to a value helpful for math operations
+  # Public: .persons
+  # Assigns variable persons for @persons; If @persons is an undesirable (negative or 0) value, reassigns.
   # 
   # Parameters: 
-  # @percent - Integer or Float: User-provided percentage to tip, ex: 20
+  # + @persons - Integer: User-provided Integer, ex: 5. 
   #
   # Returns:
-  # Float: Number converted to float to perform operations
+  # Integer: @persons, -@persons, and/or 1. 
   #
   # State Changes:
-  # None.
+  # Changes value of @persons for special "problem" cases (if @persons = 0 or negative value).
   
   def persons
     if @persons < 0
@@ -54,8 +44,20 @@ class Checksplitter
     elsif @persons == 0
       @persons = 1
     end
-    @persons
+    persons
   end
+  
+  # Public: .percent
+  # Reassigns if @percent is an undesirable (negative) value; converts user-provided @percent to a value helpful for math operations; assigns variable percent for @percent, 
+  # 
+  # Parameters: 
+  # + @subtotal - Integer or Float: User-provided percentage to tip, ex: 20.
+  #
+  # Returns:
+  # Float: Number converted to float to perform mathematical operations.
+  #
+  # State Changes:
+  # Changes value of @percent for special "problem" cases (if percent < 0).
   
   def percent
     # if @percent < 0
@@ -64,12 +66,11 @@ class Checksplitter
     @percent * 0.01
   end
   
-  # Public: #sub_per_person
-  # Divides subtotal of check among diners.
+  # Public: .sub_per_person
+  # Divides subtotal of check evenly among diners.
   # 
   # Parameters: 
-  # subtotal - Float: User-provided subtotal of bill, ex: 150.67
-  # persons - Integer: Number of diners
+  # None.
   #
   # Returns:
   # Float: subtotal / persons
@@ -81,13 +82,33 @@ class Checksplitter
     subtotal / persons
   end
   
-  # Documentation
-  # Documentation
-  # Documentation
+  # Public: .share_of_tax
+  # Divides tax (bill_w_tax - subtotal) evenly among diners.
+  # 
+  # Parameters: 
+  # None.
+  #
+  # Returns:
+  # Float: (bill_w_tax - subtotal) / persons
+  #
+  # State Changes (any changes to attributes):
+  # None.
   
   def share_of_tax
     (bill_w_tax - subtotal) / persons
   end
+  
+  # Public: .solution
+  # Adds share of bill-before-tax, individual tip, and share-of-tax to give an individual total
+  # 
+  # Parameters: 
+  # None.
+  #
+  # Returns:
+  # Float: Individual portion of bill.
+  #
+  # State Changes (any changes to attributes):
+  # None.
   
   def solution
     sub_per_person + (percent * sub_per_person) + share_of_tax
